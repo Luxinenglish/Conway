@@ -1,0 +1,11 @@
+# robots.txt pour Jeu de la Vie de Conway
+
+# Autoriser tous les robots sur tout le site
+User-agent: *
+Allow: /
+
+# Indiquer l'emplacement du sitemap
+Sitemap: https://conway.pixelserver.fr/sitemap.xml
+
+# Informations de contact (optionnel)
+# Contact: contact@aplosn.fr
