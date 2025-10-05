@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Jeu de la Vie de Conway - Simulation Interactive Infinie | Game of Life</title>
+    <meta name="description" content="Explorez le Jeu de la Vie de Conway avec cette simulation interactive infinie. Découvrez les planeurs, canons, oscillateurs, mathusalems et autres structures fascinantes. Import/Export JSON, modèles classiques inclus.">
+    <meta name="keywords" content="jeu de la vie, conway, game of life, automate cellulaire, simulation, planeur, glider, canon gosper, oscillateur, mathusalem, structures stables, vaisseaux spatiaux">
+    <meta name="author" content="Simulateur Jeu de la Vie">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Jeu de la Vie de Conway - Simulation Interactive Infinie">
+    <meta property="og:description" content="Explorez le Jeu de la Vie de Conway : simulation infinie, modèles classiques, import/export JSON. Découvrez planeurs, canons, oscillateurs et mathusalems.">
+    <meta property="og:image" content="">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="Jeu de la Vie de Conway - Simulation Interactive">
+    <meta property="twitter:description" content="Simulation interactive du Jeu de la Vie de Conway avec grille infinie et modèles classiques.">
+    <meta property="twitter:image" content="">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="">
+
+    <!-- Language alternatives -->
+    <link rel="alternate" hreflang="fr" href="">
+    <link rel="alternate" hreflang="en" href="">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Structured Data - JSON-LD -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Jeu de la Vie de Conway - Simulateur",
+            "description": "Simulateur interactif du Jeu de la Vie de Conway avec grille infinie, modèles classiques et fonctions d'import/export",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR"
+            },
+            "featureList": [
+                "Grille infinie",
+                "Modèles classiques (planeurs, canons, oscillateurs)",
+                "Import/Export JSON",
+                "Navigation interactive",
+                "Zoom dynamique",
+                "Structures stables, vaisseaux, mathusalems"
+            ],
+            "about": {
+                "@type": "Thing",
+                "name": "Jeu de la Vie",
+                "alternateName": "Conway's Game of Life",
+                "description": "Automate cellulaire imaginé par John Horton Conway en 1970"
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/styles/index.css">
+</head>
+<body>
+<header>
+    <h1>🌌 Jeu de la Vie de Conway - Simulation Infinie</h1>
+</header>
+
+<main>
+    <section aria-label="Statistiques de la simulation">
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Génération</div>
+                <div class="stat-value" id="generation">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Cellules vivantes</div>
+                <div class="stat-value" id="alive">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Chunks actifs</div>
+                <div class="stat-value" id="chunks">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Position</div>
+                <div class="stat-value" id="position">0, 0</div>
+            </div>
+        </div>
+    </section>
+
+    <section aria-label="Contrôles de la simulation">
+        <div class="controls">
+            <button id="startBtn">▶️ Démarrer</button>
+            <button id="stopBtn">⏸️ Pause</button>
+            <button id="centerBtn">🎯 Centrer</button>
+            <button id="clearBtn">🗑️ Effacer</button>
+
+            <div style="width: 100%;"></div>
+            <div class="section-title">MODÈLES</div>
+
+            <select id="patternSelect">
+                <option value="">-- Choisir un modèle --</option>
+                <option value="soup">🌊 Soupe primordiale</option>
+
+                <optgroup label="🟦 STRUCTURES STABLES">
+                    <option value="block">■ Bloc</option>
+                    <option value="beehive">⬡ Ruche</option>
+                    <option value="loaf">🍞 Pain</option>
+                    <option value="boat">⛵ Bateau</option>
+                    <option value="tub">🛁 Baignoire</option>
+                </optgroup>
+
+                <optgroup label="🔄 OSCILLATEURS">
+                    <option value="blinker">➖ Blinker (période 2)</option>
+                    <option value="toad">🐸 Crapaud (période 2)</option>
+                    <option value="beacon">🔦 Balise (période 2)</option>
+                    <option value="pulsar">💫 Pulsar (période 3)</option>
+                    <option value="pentadecathlon">⚡ Pentadecathlon (période 15)</option>
+                </optgroup>
+
+                <optgroup label="🚀 VAISSEAUX">
+                    <option value="glider">✈️ Planeur (Glider)</option>
+                    <option value="lwss">🛸 LWSS (léger)</option>
+                    <option value="mwss">🚁 MWSS (moyen)</option>
+                    <option value="hwss">✈️ HWSS (lourd)</option>
+                </optgroup>
+
+                <optgroup label="👴 MATHUSALEMS">
+                    <option value="rPentomino">🔥 R-pentomino (1103 gen)</option>
+                    <option value="acorn">🌰 Gland (5206 gen)</option>
+                    <option value="diehard">💀 Diehard (130 gen → meurt)</option>
+                </optgroup>
+
+                <optgroup label="🔫 CANONS">
+                    <option value="gosperGun">🔫 Canon à planeurs (Gosper)</option>
+                </optgroup>
+
+                <optgroup label="💨 PUFFEURS">
+                    <option value="puffer">💨 Puffeur simple</option>
+                </optgroup>
+
+                <optgroup label="🌺 JARDINS D'ÉDEN">
+                    <option value="edenGarden">🌺 Jardin d'Éden</option>
+                </optgroup>
+
+                <optgroup label="🌌 SPACEFILLERS">
+                    <option value="spacefiller">🌌 Spacefiller</option>
+                </optgroup>
+            </select>
+            <button id="insertBtn">📍 Insérer</button>
+
+            <div style="width: 100%;"></div>
+            <div class="section-title">IMPORT / EXPORT</div>
+
+            <button id="downloadBtn">💾 Télécharger JSON</button>
+            <button id="uploadBtn">📂 Importer JSON</button>
+            <input type="file" id="fileInput" accept=".json">
+
+            <div style="width: 100%;"></div>
+            <div class="section-title">PARAMÈTRES</div>
+
+            <div class="slider-container">
+                <label for="speedSlider">Vitesse</label>
+                <input type="range" id="speedSlider" min="1" max="20" value="10">
+            </div>
+
+            <div class="slider-container">
+                <label for="densitySlider">Densité: <span id="densityValue">30%</span></label>
+                <input type="range" id="densitySlider" min="10" max="70" value="30">
+            </div>
+
+            <div class="slider-container">
+                <label for="zoomSlider">Zoom: <span id="zoomValue">100%</span></label>
+                <input type="range" id="zoomSlider" min="50" max="200" value="100">
+            </div>
+        </div>
+    </section>
+
+    <section aria-label="Grille de simulation">
+        <div id="canvasContainer">
+            <canvas id="canvas" role="img" aria-label="Simulation du Jeu de la Vie de Conway"></canvas>
+        </div>
+    </section>
+</main>
+
+<script src="/js/index.js"></script>
+</body>
+</html>
